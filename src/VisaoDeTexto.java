@@ -32,6 +32,7 @@ public class VisaoDeTexto implements VisaoSimulador {
   @Override
   public void mostrarStatus(int passo, Campo campo) {
     estatisticas.reiniciar();
+    System.out.print("Passo: " + passo + " - ");
     String text = estatisticas.obterDetalhesPopulacao(campo);
     System.out.println(text);
   }
