@@ -61,6 +61,10 @@ public class Simulador
         visao = new VisaoDeGrafico(800, 400, 500);
         GeradorDePopulacoes.definirCores(visao);
         visoes.add(visao);
+
+        //Adiciona a visão de texto no array
+        visao = new VisaoDeTexto();
+        visoes.add(visao);
         
         // Configura um ponto de partida válido.
         reiniciar();
