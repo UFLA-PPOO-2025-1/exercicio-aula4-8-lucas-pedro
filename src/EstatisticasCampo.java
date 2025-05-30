@@ -60,10 +60,7 @@ public class EstatisticasCampo
         }
 
         Contador contador = contadores.get(key);
-        if (contador != null) {
-            return contador.obterContagem();
-        }
-        return 0;
+        return contador.obterContagem();
     }
     
     /**
