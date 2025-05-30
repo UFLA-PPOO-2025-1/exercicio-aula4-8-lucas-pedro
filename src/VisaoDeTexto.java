@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 
 public class VisaoDeTexto implements VisaoSimulador {
