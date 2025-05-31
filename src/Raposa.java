@@ -7,13 +7,13 @@ import java.util.Random;
  * Raposas envelhecem, se movem, comem coelhos e morrem.
  * 
  * @author David J. Barnes e Michael Kölling
- *  Traduzido por Julio César Alves
+ *         Traduzido por Julio César Alves
  * @version 2025.05.24
  */
-public class Raposa extends Animal
-{
-    // Características compartilhadas por todas as raposas (atributos estáticos, da classe).
-    
+public class Raposa extends Animal {
+    // Características compartilhadas por todas as raposas (atributos estáticos, da
+    // classe).
+
     // A idade em que uma raposa pode começar a procriar.
     private static final int IDADE_REPRODUCAO = 15;
     // A idade máxima que uma raposa pode atingir.
@@ -29,7 +29,7 @@ public class Raposa extends Animal
     private static final int NIVEL_COMIDA_MAXIMO = 20;
     // Um gerador de números aleatórios compartilhado para controlar a reprodução.
     private static final Random rand = Randomizador.obterRandom();
-    
+
     // Características individuais (atributos comuns, de instância).
 
     // O nível de comida da raposa, que aumenta ao comer coelhos.
@@ -39,17 +39,16 @@ public class Raposa extends Animal
      * Cria uma raposa. Uma raposa pode ser criada como recém-nascida (idade zero
      * e sem fome) ou com idade e nível de fome aleatórios.
      * 
-     * @param idadeAleatoria Se verdadeiro, a raposa terá idade e nível de fome aleatórios.
-     * @param campo O campo atualmente ocupado.
-     * @param localizacao A localização dentro do campo.
+     * @param idadeAleatoria Se verdadeiro, a raposa terá idade e nível de fome
+     *                       aleatórios.
+     * @param campo          O campo atualmente ocupado.
+     * @param localizacao    A localização dentro do campo.
      */
-    public Raposa(boolean idadeAleatoria, Campo campo, Localizacao localizacao)
-    {
+    public Raposa(boolean idadeAleatoria, Campo campo, Localizacao localizacao) {
         super(idadeAleatoria, campo, localizacao);
-        if(idadeAleatoria) {
+        if (idadeAleatoria) {
             nivelComida = rand.nextInt(VALOR_COMIDA_COELHO);
-        }
-        else {
+        } else {
             nivelComida = VALOR_COMIDA_COELHO;
         }
     }
@@ -58,74 +57,73 @@ public class Raposa extends Animal
     protected int obterIdadeMaxima() {
         return IDADE_MAXIMA;
     }
-    
+
     /**
      * Isto é o que a raposa faz na maior parte do tempo: ela caça coelhos.
      * Durante o processo, ela pode se reproduzir, morrer de fome
      * ou morrer de velhice.
+     * 
      * @param novasRaposas Uma lista para retornar as raposas recém-nascidas.
      */
     @Override
-    public void agir(List<Animal> novasRaposas)
-    {
+    public void agir(List<Ator> novasRaposas) {
         incrementarIdade();
         incrementarFome();
-        if(estaVivo()) {
-            reproduzir(novasRaposas);            
+        if (estaVivo()) {
+            reproduzir(novasRaposas);
             // Move-se em direção a uma fonte de comida, se encontrada.
             Localizacao novaLocalizacao = buscarComida();
-            if(novaLocalizacao == null) { 
+            if (novaLocalizacao == null) {
                 // Nenhuma comida encontrada - tenta se mover para uma localização livre.
                 novaLocalizacao = obterCampo().localizacaoVizinhaLivre(obterLocalizacao());
             }
             // Verifica se foi possível se mover.
-            if(novaLocalizacao != null) {
+            if (novaLocalizacao != null) {
                 definirLocalizacao(novaLocalizacao);
-            }
-            else {
+            } else {
                 // Superlotação.
                 morrer();
             }
         }
     }
-    
+
     /**
-     * Faz com que esta raposa fique mais faminta. Isso pode resultar na morte da raposa.
+     * Faz com que esta raposa fique mais faminta. Isso pode resultar na morte da
+     * raposa.
      */
-    private void incrementarFome()
-    {
+    private void incrementarFome() {
         nivelComida--;
-        if(nivelComida <= 0) {
+        if (nivelComida <= 0) {
             morrer();
         }
     }
-    
+
     /**
      * Procura por coelhos adjacentes à localização atual.
      * Apenas o primeiro coelho vivo é comido.
+     * 
      * @return Onde a comida foi encontrada, ou null se não foi.
      */
-    private Localizacao buscarComida()
-    {
+    private Localizacao buscarComida() {
         List<Localizacao> vizinhas = obterCampo().localizacoesVizinhas(obterLocalizacao());
-		Iterator<Localizacao> it = vizinhas.iterator();
-		Localizacao localizacaoFinal = null;
-		while(it.hasNext()) {
-		    Localizacao onde = it.next();
-		    Object animal = obterCampo().obterObjetoEm(onde);
-		    if(animal instanceof Coelho) {
-		        Coelho coelho = (Coelho) animal;
-		        if(coelho.estaVivo()) { 
-		            coelho.morrer();
-		            nivelComida += VALOR_COMIDA_COELHO;
-		            if (nivelComida > NIVEL_COMIDA_MAXIMO) {
-		                nivelComida = NIVEL_COMIDA_MAXIMO;
-		            }
-		            localizacaoFinal = onde;
-		        }
-		    }
-		}
-		return localizacaoFinal;
+        Iterator<Localizacao> it = vizinhas.iterator();
+        Localizacao localizacaoFinal = null;
+        while (it.hasNext()) {
+            Localizacao onde = it.next();
+            Object animal = obterCampo().obterObjetoEm(onde);
+            if (animal instanceof Coelho) {
+                Coelho coelho = (Coelho) animal;
+                if (coelho.estaVivo()) {
+                    coelho.morrer();
+                    nivelComida += VALOR_COMIDA_COELHO;
+                    if (nivelComida > NIVEL_COMIDA_MAXIMO) {
+                        nivelComida = NIVEL_COMIDA_MAXIMO;
+                    }
+                    localizacaoFinal = onde;
+                }
+            }
+        }
+        return localizacaoFinal;
     }
 
     @Override
@@ -146,5 +144,10 @@ public class Raposa extends Animal
     @Override
     protected int obterTamanhoMaximoNinhada() {
         return TAMANHO_MAXIMO_NINHADA;
+    }
+
+    @Override
+    public boolean estaAtivo() {
+        return estaVivo();
     }
 }

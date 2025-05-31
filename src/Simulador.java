@@ -19,7 +19,7 @@ public class Simulador
     private static final int COMPRIMENTO_PADRAO = 80;
 
     // Lista de animais no campo.
-    private List<Animal> animais;
+    private List<Ator> animais;
     // O estado atual do campo.
     private Campo campo;
     // O passo atual da simulação.
@@ -61,6 +61,10 @@ public class Simulador
         visao = new VisaoDeGrafico(800, 400, 500);
         GeradorDePopulacoes.definirCores(visao);
         visoes.add(visao);
+
+        //Adiciona a visão de texto no array
+        visao = new VisaoDeTexto();
+        visoes.add(visao);
         
         // Configura um ponto de partida válido.
         reiniciar();
@@ -101,12 +105,12 @@ public class Simulador
         passo++;
 
         // Fornece espaço para os animais recém-nascidos.
-        List<Animal> novosAnimais = new ArrayList<>(); 
+        List<Ator> novosAnimais = new ArrayList<>(); 
         // Permite que todos os ns ajam.
-        for(Iterator<Animal> it = animais.iterator(); it.hasNext(); ) {
-            Animal animal = it.next();
+        for(Iterator<Ator> it = animais.iterator(); it.hasNext(); ) {
+            Ator animal = it.next();
             animal.agir(novosAnimais);
-            if(!animal.estaVivo()) {
+            if(!animal.estaAtivo()) {
                 it.remove();
             }
         }
