@@ -115,9 +115,17 @@ para os atributos dos caçadores.
 As perguntas abaixo não precisam ser respondidas aqui, mas te ajudam a verificar se a implementação está adequada.
 
 - Os caçadores permanecem na simulação durante todo o tempo ou desaparecem em algum momento?
+
+Sim, eles continuam vivos.
+
 - Se desaparecerem, por que isso ocorre e isso representa um
 comportamento realista? Se não for, altere a simulação.
+
+Sim, eles permanecem vivos durante toda a simulação. E não é um comportamento realista, pois caçadores podem morrer.
+
 - Alguma outra classe precisará ser alterada como resultado da introdução dos caçadores?
+
+Sim, a classe `Campo` precisará ser alterada para lidar com os caçadores.
 
 ## (Opcional) Passo 6 - Incrementando o uso do polimorfismo
 

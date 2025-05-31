@@ -8,6 +8,8 @@ public class Cacador implements Ator {
   public Cacador(Campo campo, Localizacao localizacao) {
     this.campo = campo;
     this.localizacao = localizacao;
+
+    campo.colocar(this, localizacao);
   }
 
   @Override
