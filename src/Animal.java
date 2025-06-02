@@ -82,7 +82,8 @@ public abstract class Animal implements Ator {
      * Coloca o animal na nova localização no campo fornecido.
      * @param novaLocalizacao A nova localização do animal.
      */
-    protected void definirLocalizacao(Localizacao novaLocalizacao)
+    @Override
+    public void definirLocalizacao(Localizacao novaLocalizacao)
     {
         if(localizacao != null) {
             campo.limpar(localizacao);

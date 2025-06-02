@@ -24,27 +24,28 @@ Somente depois disso é que você deve passar para o próximo passo.
 - **ATENÇÃO**: **desligue o GitHub Copilot para fazer o exercício!**
   - Se você utilizá-lo você não estará realmente exercitando os conceitos aprendidos e
     não terá o domínio adequado para desenvolver as habilidades necessárias para se tornar
-	um bom programador/desenvolvedor.
+ um bom programador/desenvolvedor.
   - Sem contar ainda a questão do plágio.
   - Lembre-se que você pode (e deve) consultar os materiais da disciplina para fazer o exercício.
 
-- Esse arquivo README pode ser melhor visualizado no VS Code (com formatação adequada) 
+- Esse arquivo README pode ser melhor visualizado no VS Code (com formatação adequada)
   abrindo-o no modo de visualização. Para isso, basta apertar Ctrl+Sfhit+V com ele aberto.
 
 ## Passo 1 - Nova forma de visualização
 
-Revise o código da classe `Simulador`. 
-Encontre todas as ocorrências das classes e interfaces de visualização (aquelas cujos nomes começam com `Visao`) 
+Revise o código da classe `Simulador`.
+Encontre todas as ocorrências das classes e interfaces de visualização (aquelas cujos nomes começam com `Visao`)
 e rastreie todas as variáveis ​​declaradas usando qualquer um desses tipos.
 A ideia é que você tente entender exatamente como as visualizações são usadas na
 classe `Simulador`.
 
 Em seguida, implemente uma nova classe `VisaoDeTexto` que implemente a interface
-`VisaoSimulador`. 
+`VisaoSimulador`.
+
 - A classe criada deve fornecer uma visualização textual da simulação.
 - A cada passo da simulação ela deve imprimir uma linha no terminal como o exemplo abaixo:
-   
-   ```Passo N - Raposas: 121 Coelhos: 266 ```
+
+   ```Passo N - Raposas: 121 Coelhos: 266```
 
 - Dica: você precisará usar um objeto da classe `EstatisticasCampo`.
   - Avalie quais métodos da classe são mais úteis para obter as informações necessárias.
@@ -61,7 +62,7 @@ que não são animais, como plantas, caçadores ou informações sobre clima, po
 Para tratar isso, seria bom aumentar o nível de abstração do nosso modelo, criando uma classe
 `Ator` que pudesse representar uma gama maior de entidades que podem interagir com a simulação.
 
-Neste passo você deve criar uma interface `Ator` que tenha os métodos `agir` e `estaAtivo` e 
+Neste passo você deve criar uma interface `Ator` que tenha os métodos `agir` e `estaAtivo` e
 fazer as alterações necessárias na classe `Animal` para implementar essa interface.
 
 - O método `agir` deve receber uma lista de atores por parâmetro e não deve retornar nada.
@@ -69,11 +70,13 @@ fazer as alterações necessárias na classe `Animal` para implementar essa inte
   - Obs.: estamos usando _ativo_ em vez de vivo porque poderia existir uma subclasse que não seja um ser vivo.
 
 Neste passo, ainda não vamos usar a interface `Ator` na classe `Simulador` (e, portanto, ela ainda não vai compilar).
+
 - Basta que a classe `Animal` esteja implementando a interface e ela e suas subclasses estejam compilando corretamente.
 
 ## Passo 3 - Usando atores na simulação
 
 Neste passo você deve alterar a classe `Simulador` para que ela use a interface `Ator` em vez de usar diretamente a classe `Animal`.
+
 - Lembre-se de adequar os nomes para que eles façam sentido com a nova interface.
 
 Você deverá alterar também a classe `GeradorDePopulacoes`.
@@ -87,9 +90,9 @@ nova classe `Cacador` para representar caçadores na simulação.
 
 Essa nova classe não vai herdar de `Animal` porque ela tem características bem distintas dos animais.
 
-- Os caçadores não têm idade máxima e não se alimentam nem se reproduzem. 
-- A cada passo da simulação, um caçador se move para um local aleatório livre em qualquer lugar do campo 
-  - e dispara um número fixo de tiros em alvos aleatórios ao redor do campo. 
+- Os caçadores não têm idade máxima e não se alimentam nem se reproduzem.
+- A cada passo da simulação, um caçador se move para um local aleatório livre em qualquer lugar do campo
+  - e dispara um número fixo de tiros em alvos aleatórios ao redor do campo.
   - Qualquer animal em um dos alvos é morto.
 
 Antes de implementar, pense na modelagem da classe `Cacador`.
@@ -98,7 +101,7 @@ Antes de implementar, pense na modelagem da classe `Cacador`.
 - Como deve ser a implementação do método `agir`?
 - Como deve ser a implementação do método `estaAtivo`?
 - É necessária a implementação de algum outro método?
-- A nova classe geraria replicação de código com alguma outra classe já existente? 
+- A nova classe geraria replicação de código com alguma outra classe já existente?
   Em caso afirmativo, faça a refatoração necessária para evitar essa replicação.
 
 Por fim, altere a classe `GeradorDePopulacoes` para que os caçadores sejam incluídos na simulação.
@@ -129,7 +132,7 @@ Sim, a classe `Campo` precisará ser alterada para lidar com os caçadores.
 
 ## (Opcional) Passo 6 - Incrementando o uso do polimorfismo
 
-Repare que a classe `Campo` utiliza a classe `Object` para guardar o que 
+Repare que a classe `Campo` utiliza a classe `Object` para guardar o que
 existe em cada localização do campo.
 
 Mas agora que temos uma interface `Ator`, como ela representa qualquer coisa que pode estar no campo da simulação, poderíamos usá-la em vez de `Object`
@@ -164,10 +167,11 @@ Uma maneira de tratar essa flexibilidade seria delegar a responsabilidade de
 decidir se um ator é uma presa de um determinado predador (ou não) para uma outra classe.
 
 Essa classe poderia ser responsável por registrar as relações entre predadores e presas.
+
 - Isso deixaria o restante do sistema desacoplado dessas relações, permitindo que
   novos predadores e presas fossem adicionados sem a necessidade de alterar o código existente (exceto a própria classe que trata isso).
 
-Altere então o seu projeto para usar a classe `RelacoesPredadorPresa` abaixo. 
+Altere então o seu projeto para usar a classe `RelacoesPredadorPresa` abaixo.
 
 ```java
 import java.util.HashMap;

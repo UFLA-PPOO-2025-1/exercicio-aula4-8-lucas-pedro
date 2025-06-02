@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.List;
 
 public class Cacador implements Ator {
@@ -12,12 +13,47 @@ public class Cacador implements Ator {
     campo.colocar(this, localizacao);
   }
 
+  /**
+   * Coloca o caçador na nova localização no campo fornecido.
+   * 
+   * @param novaLocalizacao A nova localização do animal.
+   */
+  @Override
+  public void definirLocalizacao(Localizacao novaLocalizacao) {
+    if (localizacao != null) {
+      campo.limpar(localizacao);
+    }
+    localizacao = novaLocalizacao;
+    campo.colocar(this, novaLocalizacao);
+  }
+
   @Override
   public void agir(List<Ator> novoCacadores) {
+
+    // Teleporta-se pra uma localização livre
     Localizacao novaLocalizacao = campo.localizacaoVizinhaLivre();
 
-    if (novaLocalizacao != null) {
-      localizacao = novaLocalizacao;
+    // Define a localização
+    definirLocalizacao(novaLocalizacao);
+
+    // Fazer ataque
+    atirar();
+  }
+
+  private void atirar() {
+    List<Localizacao> alvos = campo.localizacoesTotais();
+    Iterator<Localizacao> it = alvos.iterator();
+    int cont = 0;
+    while (it.hasNext() && cont < NUM_TIRO) {
+      Localizacao onde = it.next();
+      Object animal = campo.obterObjetoEm(onde);
+      if (animal instanceof Animal) {
+        Animal alvo = (Animal) animal;
+        if (alvo.estaAtivo()) {
+          alvo.morrer();
+        }
+      }
+      cont++;
     }
   }
 

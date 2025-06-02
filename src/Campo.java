@@ -141,36 +141,20 @@ public class Campo {
         return livres;
     }
 
-    /*
-    Teste
+    public List<Localizacao> localizacoesTotais() {
+        List<Localizacao> todas = new LinkedList<>();
 
-    public List<Localizacao> localizacoesVizinhasTotais(Localizacao localizacao) {
-        assert localizacao != null : "Localização nula passada para localizacoesVizinhas";
-        // A lista de localizações a ser retornada.
-        List<Localizacao> localizacoes = new LinkedList<>();
-        if (localizacao != null) {
-            int linha = localizacao.obterLinha();
-            int coluna = localizacao.obterColuna();
-            for (int deslocLinha = 0; deslocLinha <= 1; deslocLinha++) {
-                int proxLinha = linha + deslocLinha;
-                if (proxLinha >= 0 && proxLinha < comprimento) {
-                    for (int deslocColuna = 0; deslocColuna <= 1; deslocColuna++) {
-                        int proxColuna = coluna + deslocColuna;
-                        // Excluir localizações inválidas e a localização original.
-                        if (proxColuna >= 0 && proxColuna < largura && (deslocLinha != 0 || deslocColuna != 0)) {
-                            localizacoes.add(new Localizacao(proxLinha, proxColuna));
-                        }
-                    }
-                }
+        for (int linha = 0; linha < obterComprimento(); linha++) {
+            for (int coluna = 0; coluna < obterLargura(); coluna++) {
+                Localizacao localizacao = new Localizacao(linha, coluna);
+                todas.add(localizacao);
             }
-
-            // Embaralha a lista. Vários outros métodos dependem da lista
-            // estar em uma ordem aleatória.
-            Collections.shuffle(localizacoes, rand);
         }
-        return localizacoes;
-    } */
 
+        // Embaralh a lista das localizações no campo
+        Collections.shuffle(todas, rand);
+        return todas;
+    }
 
     /**
      * Tenta encontrar uma localização livre que seja vizinha à
