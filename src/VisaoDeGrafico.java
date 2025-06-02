@@ -4,17 +4,19 @@ import javax.swing.*;
 import java.util.*;
 
 /**
- * VisaoGrafico fornece uma visão de duas popluações de atores no campo como um gráfico de
- * linha no tempo. Na sua versão atual, ele consegue plotar exatamente duas classes diferentes
- * de animais. Se mais classes de animais forem acrescentadas, elas não serão exibidas com
+ * VisaoGrafico fornece uma visão de duas popluações de atores no campo como um
+ * gráfico de
+ * linha no tempo. Na sua versão atual, ele consegue plotar exatamente duas
+ * classes diferentes
+ * de animais. Se mais classes de animais forem acrescentadas, elas não serão
+ * exibidas com
  * essa versão do código.
  * 
  * @author Michael Kölling and David J. Barnes
- *  Traduzido por Julio César Alves
+ *         Traduzido por Julio César Alves
  * @version 2025.05.24
  */
-public class VisaoDeGrafico implements VisaoSimulador
-{
+public class VisaoDeGrafico implements VisaoSimulador {
     private static final Color CINZA_CLARO = new Color(0, 0, 0, 40);
 
     private static JFrame frame;
@@ -32,61 +34,60 @@ public class VisaoDeGrafico implements VisaoSimulador
     /**
      * Construtor.
      * 
-     * @param largura A largura da janela do gráfico (in pixels).
-     * @param altura A largura da janela do gráfico (in pixels).
+     * @param largura        A largura da janela do gráfico (in pixels).
+     * @param altura         A largura da janela do gráfico (in pixels).
      * @param yMaximoInicial O valor máximo inicial para o eixo y.
      */
-    public VisaoDeGrafico(int largura, int altura, int yMaximoInicial)
-    {
+    public VisaoDeGrafico(int largura, int altura, int yMaximoInicial) {
         estatisticas = new EstatisticasCampo();
         classes = new HashSet<>();
         cores = new HashMap<>();
 
         if (frame == null) {
             frame = construirFrame(largura, altura, yMaximoInicial);
-        }
-        else {
+        } else {
             grafico.novaExecucao();
         }
 
-        //showStatus(0, null);
+        // showStatus(0, null);
     }
 
     /**
      * Define uma cor a ser usada para uma classe específica de animal.
+     * 
      * @param classeAnimal A classe do animal.
-     * @param cor A cor a ser usada para a classe fornecida.
+     * @param cor          A cor a ser usada para a classe fornecida.
      */
     @Override
-    public void definirCor(Class<?> classeAnimal, Color cor)
-    {
+    public void definirCor(Class<?> classeAnimal, Color cor) {
         cores.put(classeAnimal, cor);
         classes = cores.keySet();
     }
 
-
     /**
-     * Mostra o estado atual do campo. O estado é mostrado através de um gráfico de linha para as
-     * duas classes no campo. Essa visão atualmente não funciona para mais (ou menos) do que
-     * exatamente duas classes. Se o campo tiver mais de dois tipos diferentes de aniimais,
+     * Mostra o estado atual do campo. O estado é mostrado através de um gráfico de
+     * linha para as
+     * duas classes no campo. Essa visão atualmente não funciona para mais (ou
+     * menos) do que
+     * exatamente duas classes. Se o campo tiver mais de dois tipos diferentes de
+     * aniimais,
      * somente duas das classes são exibidas
      * 
      * @param passo Qual iteração do passo está sendo exibida.
      * @param campo O campo cujo estado será exibido.
      */
     @Override
-    public void mostrarStatus(int passo, Campo campo)
-    {
+    public void mostrarStatus(int passo, Campo campo) {
         grafico.atualizar(passo, campo, estatisticas);
     }
 
     /**
      * Determina se a simulação deve continuar a ser executada.
+     * 
      * @return true Se houver mais de uma espécie viva.
      */
     @Override
-    public boolean ehViavel(Campo campo)
-    {
+    public boolean ehViavel(Campo campo) {
         return estatisticas.ehViavel(campo);
     }
 
@@ -99,19 +100,18 @@ public class VisaoDeGrafico implements VisaoSimulador
         grafico.novaExecucao();
     }
 
-    /** 
-     * Reabilita as opções da visão 
-      */
+    /**
+     * Reabilita as opções da visão
+     */
     @Override
     public void reabilitarOpcoes() {
         // nada a fazer nesta classe
     }
-    
+
     /**
      * Prepara o frame para a exibição do gráfico.
      */
-    private JFrame construirFrame(int largura, int altura, int yMaximoInicial)
-    {
+    private JFrame construirFrame(int largura, int altura, int yMaximoInicial) {
         JFrame frame = new JFrame("Visão de Gráfico");
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
@@ -140,8 +140,7 @@ public class VisaoDeGrafico implements VisaoSimulador
     /**
      * Classe aninhada interna: um componente para exibir o gráfico.
      */
-    class PainelDeGrafico extends JComponent
-    {
+    class PainelDeGrafico extends JComponent {
         private static final double FATOR_DE_ESCALA = 0.8;
 
         // Uma imagem interna usada com buffer para o desenho.
@@ -154,8 +153,7 @@ public class VisaoDeGrafico implements VisaoSimulador
         /**
          * Cria um PainelDeGrafico novo, vazio.
          */
-        public PainelDeGrafico(int largura, int altura, int yMaximoInicial)
-        {
+        public PainelDeGrafico(int largura, int altura, int yMaximoInicial) {
             imagemGrafico = new BufferedImage(largura, altura, BufferedImage.TYPE_INT_RGB);
             limparImagem();
             ultimoValor1 = altura;
@@ -166,16 +164,15 @@ public class VisaoDeGrafico implements VisaoSimulador
         /**
          * Indica uma nova execução da simulação no painel.
          */
-        public void novaExecucao()
-        {
+        public void novaExecucao() {
             int altura = imagemGrafico.getHeight();
             int largura = imagemGrafico.getWidth();
 
             Graphics g = imagemGrafico.getGraphics();
-            g.copyArea(4, 0, largura-4, altura, -4, 0);            
+            g.copyArea(4, 0, largura - 4, altura, -4, 0);
             g.setColor(Color.BLACK);
-            g.drawLine(largura-4, 0, largura-4, altura);
-            g.drawLine(largura-2, 0, largura-2, altura);
+            g.drawLine(largura - 4, 0, largura - 4, altura);
+            g.drawLine(largura - 2, 0, largura - 2, altura);
             ultimoValor1 = altura;
             ultimoValor2 = altura;
             repaint();
@@ -184,8 +181,7 @@ public class VisaoDeGrafico implements VisaoSimulador
         /**
          * Exibe um novo ponto de dados.
          */
-        public void atualizar(int passo, Campo campo, EstatisticasCampo estatisticas)
-        {
+        public void atualizar(int passo, Campo campo, EstatisticasCampo estatisticas) {
             if (classes.size() >= 2) {
                 Iterator<Class<?>> it = classes.iterator();
                 Class<?> classe1 = it.next();
@@ -201,30 +197,30 @@ public class VisaoDeGrafico implements VisaoSimulador
                 int largura = imagemGrafico.getWidth();
 
                 // move o gráfico um pixel para a esquerda
-                g.copyArea(1, 0, largura-1, altura, -1, 0);
+                g.copyArea(1, 0, largura - 1, altura, -1, 0);
 
                 // calula y, verifica se está fora da tela e diminui a escala do gráfico
                 // se necessário
                 int y = altura - ((altura * contagem1) / yMaximo) - 1;
-                while (y<0) {
+                while (y < 0) {
                     reduzirEscala();
                     y = altura - ((altura * contagem1) / yMaximo) - 1;
                 }
                 g.setColor(CINZA_CLARO);
-                g.drawLine(largura-2, y, largura-2, altura);
+                g.drawLine(largura - 2, y, largura - 2, altura);
                 g.setColor(cores.get(classe1));
-                g.drawLine(largura-3, ultimoValor1, largura-2, y);
+                g.drawLine(largura - 3, ultimoValor1, largura - 2, y);
                 ultimoValor1 = y;
 
                 y = altura - ((altura * contagem2) / yMaximo) - 1;
-                while (y<0) {
+                while (y < 0) {
                     reduzirEscala();
                     y = altura - ((altura * contagem2) / yMaximo) - 1;
                 }
                 g.setColor(CINZA_CLARO);
-                g.drawLine(largura-2, y, largura-2, altura);
+                g.drawLine(largura - 2, y, largura - 2, altura);
                 g.setColor(cores.get(classe2));
-                g.drawLine(largura-3, ultimoValor2, largura-2, y);
+                g.drawLine(largura - 3, ultimoValor2, largura - 2, y);
                 ultimoValor2 = y;
 
                 repaint();
@@ -237,20 +233,19 @@ public class VisaoDeGrafico implements VisaoSimulador
         /**
          * Diminui a escala do gráfico verticalmente para liberar espaço no topo.
          */
-        public void reduzirEscala()
-        {
+        public void reduzirEscala() {
             Graphics g = imagemGrafico.getGraphics();
             int altura = imagemGrafico.getHeight();
             int largura = imagemGrafico.getWidth();
 
-            BufferedImage imagemTemp = new BufferedImage(largura, (int)(altura*FATOR_DE_ESCALA), 
-                                                         BufferedImage.TYPE_INT_RGB);
+            BufferedImage imagemTemp = new BufferedImage(largura, (int) (altura * FATOR_DE_ESCALA),
+                    BufferedImage.TYPE_INT_RGB);
             Graphics2D gTemp = (Graphics2D) imagemTemp.getGraphics();
 
             gTemp.scale(1.0, FATOR_DE_ESCALA);
             gTemp.drawImage(imagemGrafico, 0, 0, null);
 
-            int topoAntigo = (int) (altura * (1.0-FATOR_DE_ESCALA));
+            int topoAntigo = (int) (altura * (1.0 - FATOR_DE_ESCALA));
 
             g.setColor(Color.WHITE);
             g.fillRect(0, 0, largura, topoAntigo);
@@ -266,8 +261,7 @@ public class VisaoDeGrafico implements VisaoSimulador
         /**
          * Limpa a imagem do painel.
          */
-        final public void limparImagem()
-        {
+        final public void limparImagem() {
             Graphics g = imagemGrafico.getGraphics();
             g.setColor(Color.WHITE);
             g.fillRect(0, 0, imagemGrafico.getWidth(), imagemGrafico.getHeight());
@@ -278,13 +272,13 @@ public class VisaoDeGrafico implements VisaoSimulador
 
         /**
          * Indica para o layout manager quão o compoente gostaria de ser.
-         * (Este método é chamado pelos gestores de layout para posicionar os componentes)
+         * (Este método é chamado pelos gestores de layout para posicionar os
+         * componentes)
          * 
          * @return A dimensão preferida para esse componente.
          */
         @Override
-        public Dimension getPreferredSize()
-        {
+        public Dimension getPreferredSize() {
             return new Dimension(imagemGrafico.getWidth(), imagemGrafico.getHeight());
         }
 
@@ -292,22 +286,21 @@ public class VisaoDeGrafico implements VisaoSimulador
          * Este componente é opaco.
          */
         @Override
-        public boolean isOpaque()
-        {
+        public boolean isOpaque() {
             return true;
         }
 
         /**
-         * Chamado quando esse componente precisa ser reexibido. Copia a 
+         * Chamado quando esse componente precisa ser reexibido. Copia a
          * imagem interna para a tela. (Este método é internamente pelo
          * Swing sempre que o componente precisa ser exibido)
          * 
-         * @param g O contexto gráfico que pode ser usado para desenhar neste componente.
+         * @param g O contexto gráfico que pode ser usado para desenhar neste
+         *          componente.
          */
         @Override
-        public void paintComponent(Graphics g)
-        {
-            if(imagemGrafico != null) {
+        public void paintComponent(Graphics g) {
+            if (imagemGrafico != null) {
                 g.drawImage(imagemGrafico, 0, 0, null);
             }
         }

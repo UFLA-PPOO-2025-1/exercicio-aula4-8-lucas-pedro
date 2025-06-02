@@ -1,7 +1,7 @@
 import java.util.List;
 import java.util.Random;
 
-public abstract class Animal {
+public abstract class Animal implements Ator {
 
     // Características compartilhadas por todos os coelhos (atributos estáticos, da classe).
 
@@ -82,7 +82,8 @@ public abstract class Animal {
      * Coloca o animal na nova localização no campo fornecido.
      * @param novaLocalizacao A nova localização do animal.
      */
-    protected void definirLocalizacao(Localizacao novaLocalizacao)
+    @Override
+    public void definirLocalizacao(Localizacao novaLocalizacao)
     {
         if(localizacao != null) {
             campo.limpar(localizacao);
@@ -114,7 +115,7 @@ public abstract class Animal {
      * Novos nascimentos serão feitos em locais vizinhos livres.
      * @param novosAnimais Uma lista para retornar os animais recém-nascidos.
      */
-    protected void reproduzir(List<Animal> novosAnimais)
+    protected void reproduzir(List<Ator> novosAnimais)
     {
         // Novos animais nascem em locais vizinhos.
         // Obtém uma lista de locais vizinhos livres.
@@ -136,8 +137,7 @@ public abstract class Animal {
         return obterIdade() >= obterIdadeReproducao();
     }
 
-    
-    public abstract void agir(List<Animal> novosAnimais);
+    public abstract void agir(List<Ator> novosAnimais);
 
     protected abstract int obterIdadeMaxima();
     

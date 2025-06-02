@@ -5,12 +5,12 @@ import java.util.List;
  * Coelhos envelhecem, se movem, se reproduzem e morrem.
  * 
  * @author David J. Barnes e Michael Kölling
- *  Traduzido por Julio César Alves
+ *         Traduzido por Julio César Alves
  * @version 2025.05.24
  */
-public class Coelho extends Animal
-{
-    // Características compartilhadas por todos os coelhos (atributos estáticos, da classe).
+public class Coelho extends Animal {
+    // Características compartilhadas por todos os coelhos (atributos estáticos, da
+    // classe).
 
     // A idade em que um coelho pode começar a se reproduzir.
     private static final int IDADE_REPRODUCAO = 5;
@@ -26,11 +26,10 @@ public class Coelho extends Animal
      * zero (recém-nascido) ou com uma idade aleatória.
      * 
      * @param idadeAleatoria Se verdadeiro, o coelho terá uma idade aleatória.
-     * @param campo O campo atualmente ocupado.
-     * @param localizacao A localização dentro do campo.
+     * @param campo          O campo atualmente ocupado.
+     * @param localizacao    A localização dentro do campo.
      */
-    public Coelho(boolean idadeAleatoria, Campo campo, Localizacao localizacao)
-    {
+    public Coelho(boolean idadeAleatoria, Campo campo, Localizacao localizacao) {
         super(idadeAleatoria, campo, localizacao);
     }
 
@@ -42,20 +41,19 @@ public class Coelho extends Animal
     /**
      * Isto é o que o coelho faz na maior parte do tempo: ele corre por aí.
      * Às vezes, ele se reproduz ou morre de velhice.
+     * 
      * @param novosCoelhos Uma lista para retornar os coelhos recém-nascidos.
      */
     @Override
-    public void agir(List<Animal> novosCoelhos)
-    {
+    public void agir(List<Ator> novosCoelhos) {
         incrementarIdade();
-        if(estaVivo()) {
-            reproduzir(novosCoelhos);            
+        if (estaVivo()) {
+            reproduzir(novosCoelhos);
             // Tenta se mover para uma localização livre.
             Localizacao novaLocalizacao = obterCampo().localizacaoVizinhaLivre(obterLocalizacao());
-            if(novaLocalizacao != null) {
+            if (novaLocalizacao != null) {
                 definirLocalizacao(novaLocalizacao);
-            }
-            else {
+            } else {
                 // Superlotação.
                 morrer();
             }
@@ -77,5 +75,10 @@ public class Coelho extends Animal
 
     protected int obterTamanhoMaximoNinhada() {
         return TAMANHO_MAXIMO_NINHADA;
+    }
+
+    @Override
+    public boolean estaAtivo() {
+        return estaVivo();
     }
 }
